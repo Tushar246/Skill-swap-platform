@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Swap Platform</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Skill Swap Platform</h1>
+        <a href="/login" class="login-btn">Login</a>
+    </header>
+
+    <div class="filters">
+        <form method="get">
+            <select name="availability">
+                <option value="">Availability</option>
+                <option value="weekends">Weekends</option>
+                <option value="evenings">Evenings</option>
+                <option value="weekdays">Weekdays</option>
+            </select>
+            <input type="text" name="search" placeholder="Search skill..." value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="users">
+        {% for user in users %}
+        <div class="user-card">
+            <div class="profile-photo">Profile Photo</div>
+            <div class="user-info">
+                <h2>{{ user.name }}</h2>
+                <p><strong>Skills Offered:</strong>
+                    {% for skill in user.offered_skills.all %}
+                        <span class="skill">{{ skill.skill.name }}</span>
+                    {% endfor %}
+                </p>
+                <p><strong>Skill Wanted:</strong>
+                    {% for skill in user.wanted_skills.all %}
+                        <span class="skill wanted">{{ skill.skill.name }}</span>
+                    {% endfor %}
+                </p>
+                <p>Rating: {{ user.rating }}/5</p>
+            </div>
+            <div class="request-btn">
+                <button>Request</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span>&lt;</span> <span class="active">1</span> <span>2</span> <span>3</span> <span>&gt;</span>
+    </div>
+</div>
+</body>
+</html>
